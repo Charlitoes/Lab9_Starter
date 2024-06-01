@@ -116,10 +116,14 @@
           throw new ValiadationError('Both numbers must be provided.');
         }
 
+        if (isNaN(firstNum) || isNaN(secondNum)){
+          throw new ValiadationError('Both numbers must be valid numbers');
+        }
+
         firstNum = parseFloat(firstNum);
         secondNum = parseFloat(secondNum);
 
-        if (isNaN(firstNum) || isNaN(secondNum)) {
+        if (isNaN(firstNum) || isNaN(secondNum) ) {
           throw new ValiadationError('Both inputs must be valid numbers.');
         }
 
