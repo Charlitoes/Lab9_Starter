@@ -47,6 +47,12 @@
       width: 122px;
     }
   </style>
+  <script>
+    window._trackJs = {
+      token: "16adf1ba45e840a6bb892763cadfbb69"
+    };
+  </script>
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
 </head>
 
 <body>
@@ -202,6 +208,11 @@
     document.getElementById('trigger-error').addEventListener('click', () => {
       throw new Error('This is a manually triggered global error.');
     });
+
+    window.onerror = function (message, source, lineno, colno, error) {
+      console.log('Global Error caught: ', message);
+      return true;
+    };
   </script>
 </body>
 
