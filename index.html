@@ -88,6 +88,14 @@
   </main>
 
   <script>
+    //step 4 addition
+    class ValiadationError extends Error {
+      constructor(message) {
+        super (message);
+        this.name = 'ValidationError';
+      }
+    }
+
     let form = document.querySelector('form');
     form.addEventListener('submit', e => {
       e.preventDefault();
@@ -95,27 +103,33 @@
       let firstNum = document.querySelector('#first-num').value;
       let secondNum = document.querySelector('#second-num').value;
       let operator = document.querySelector('#operator').value;
+
+      //step 3 addition
       try {
         if (firstNum === '' || secondNum === '') {
-          throw new Error('Both numbers must be provided.');
+          throw new ValiadationError('Both numbers must be provided.');
         }
 
         firstNum = parseFloat(firstNum);
         secondNum = parseFloat(secondNum);
 
         if (isNaN(firstNum) || isNaN(secondNum)) {
-          throw new Error('Both inputs must be valid numbers.');
+          throw new ValiadationError('Both inputs must be valid numbers.');
         }
 
         if (operator === '/' && secondNum === 0) {
-          throw new Error('Division by zero is not allowed.');
+          throw new ValiadationError('Division by zero is not allowed.');
         }
 
         let result = eval(`${firstNum} ${operator} ${secondNum}`);
         output.innerHTML = result;
         console.log(`Calculation successful: ${firstNum} ${operator} ${secondNum} = ${result}`);
       } catch (error) {
-        output.innerHTML = 'Error: ' + error.message;
+        if (error instanceof ValiadationError){
+          output.innerHTML = 'Validation Error: ' + error.message; 
+        } else {
+          output.innerHTML = 'Error: ' + error.message; 
+        }
         console.error('Calculation error: ', error);
       } finally {
         console.log('Calculation attempt finished.');
@@ -126,7 +140,7 @@
 
     // Start your code here
     // You may move this JS to another file if you wish
-
+    // step 2 addition
     document.getElementById('console-log').addEventListener('click', () =>{
       console.log('This is a console log demo');
     });
